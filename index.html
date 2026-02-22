@@ -1,89 +1,147 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urodziny Hani 🎀</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Urodziny Hani 🎂</title>
+
+<!-- Google Font (anime vibe) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a, #ff66b2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-    color: white;
+:root{
+  --pink:#ff4fa3;
+  --dark:#0f0f14;
+  --light:#ffffff;
+  --accent:#ff9ed2;
 }
 
-.container {
-    text-align: center;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-h1 {
-    font-size: 40px;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
+body{
+  height:100vh;
+  background: radial-gradient(circle at top, #1c1c26 0%, #0f0f14 60%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Poppins', sans-serif;
+  color:var(--light);
+  overflow:hidden;
 }
 
-.gift-box {
-    width: 200px;
-    height: 200px;
-    background: #ff4da6;
-    position: relative;
-    margin: 0 auto;
-    cursor: pointer;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #ff99cc;
-    transition: transform 0.6s ease;
+.container{
+  text-align:center;
 }
 
-.lid {
-    width: 200px;
-    height: 60px;
-    background: #ff1a8c;
-    position: absolute;
-    top: -60px;
-    left: 0;
-    border-radius: 15px 15px 0 0;
-    transition: transform 0.6s ease;
+h1{
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:40px;
+  font-size:clamp(28px,4vw,42px);
+  background: linear-gradient(90deg,var(--pink),var(--accent));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.ribbon-vertical {
-    width: 30px;
-    height: 200px;
-    background: black;
-    position: absolute;
-    left: 85px;
+/* GIFT BOX */
+.gift-wrapper{
+  position:relative;
+  width:220px;
+  height:220px;
+  margin:0 auto;
+  cursor:pointer;
 }
 
-.ribbon-horizontal {
-    width: 200px;
-    height: 30px;
-    background: black;
-    position: absolute;
-    top: 85px;
+.gift-box{
+  width:100%;
+  height:100%;
+  background:linear-gradient(145deg,#ff4fa3,#d81b78);
+  border-radius:16px;
+  position:relative;
+  box-shadow:0 0 40px rgba(255,79,163,0.4);
+  transition:transform 0.6s ease;
 }
 
-.message {
-    margin-top: 40px;
-    font-size: 32px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 1s ease;
-    color: #ffe6f2;
-    text-shadow: 0 0 15px #ff66cc;
+.lid{
+  position:absolute;
+  width:100%;
+  height:70px;
+  top:-70px;
+  left:0;
+  background:linear-gradient(145deg,#ff77bb,#ff4fa3);
+  border-radius:16px 16px 0 0;
+  transition:transform 0.8s cubic-bezier(.68,-0.55,.27,1.55);
 }
 
-.open .lid {
-    transform: translateY(-80px) rotate(-15deg);
+.ribbon-v{
+  position:absolute;
+  width:28px;
+  height:100%;
+  background:#111;
+  left:50%;
+  transform:translateX(-50%);
 }
 
-.open .message {
-    opacity: 1;
-    transform: translateY(0);
+.ribbon-h{
+  position:absolute;
+  height:28px;
+  width:100%;
+  background:#111;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+/* MESSAGE */
+.message{
+  margin-top:50px;
+  font-size:clamp(24px,3vw,34px);
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 1s ease;
+  text-shadow:0 0 20px rgba(255,158,210,0.6);
+}
+
+.sub{
+  margin-top:15px;
+  font-weight:300;
+  font-size:18px;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+
+/* OPEN STATE */
+.open .lid{
+  transform:translateY(-120px) rotate(-15deg);
+}
+
+.open .message{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.open .sub{
+  opacity:1;
+}
+
+/* CONFETTI */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:14px;
+  background:var(--pink);
+  top:-10px;
+  animation:fall 3s linear infinite;
+  opacity:0.8;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+  }
 }
 </style>
 </head>
@@ -91,23 +149,45 @@ h1 {
 <body>
 
 <div class="container">
-    <h1>Dla Hani 🎀✨</h1>
+  <h1>Dla Hani 🖤</h1>
 
-    <div class="gift-box" onclick="openGift(this)">
-        <div class="lid"></div>
-        <div class="ribbon-vertical"></div>
-        <div class="ribbon-horizontal"></div>
+  <div class="gift-wrapper" id="gift">
+    <div class="lid"></div>
+    <div class="gift-box">
+      <div class="ribbon-v"></div>
+      <div class="ribbon-h"></div>
     </div>
+  </div>
 
-    <div class="message">
-        🎉 Wszystkiego najlepszego Hania! 🎂💖<br>
-        Dużo miłości, szczęścia i spełnienia marzeń ✨
-    </div>
+  <div class="message">
+    🎉 Wszystkiego najlepszego Hania! 🎂
+  </div>
+  <div class="sub">
+    Dużo miłości, spełnionych marzeń i pięknych chwil ✨
+  </div>
 </div>
 
 <script>
-function openGift(box) {
-    box.classList.toggle("open");
+const gift = document.getElementById("gift");
+let opened = false;
+
+gift.addEventListener("click", () => {
+  if(opened) return;
+  opened = true;
+  gift.classList.add("open");
+  createConfetti();
+});
+
+function createConfetti(){
+  for(let i=0;i<40;i++){
+    const conf = document.createElement("div");
+    conf.classList.add("confetti");
+    conf.style.left = Math.random()*100 + "vw";
+    conf.style.animationDuration = (Math.random()*2+2)+"s";
+    conf.style.background = ["#ff4fa3","#ff9ed2","#ffffff"][Math.floor(Math.random()*3)];
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),4000);
+  }
 }
 </script>
 
